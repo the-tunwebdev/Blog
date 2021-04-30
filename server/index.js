@@ -11,14 +11,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // post the new blogs 
 app.post('/addblog',async(req,res)=>{
     try{
-        const {name,title,description} = req.body;
+        const {name,title,image,description} = req.body;
         const time =  new Date()
-        const newBlog= await pool.query('INSERT INTO bloguser (name,title,time,description) VALUES ($1,$2,$3,$4) RETURNING * ' ,[name,title,time,description])
+        const newBlog= await pool.query('INSERT INTO bloguser (name,title,image,time,description) VALUES ($1,$2,$3,$4,$5) RETURNING * ' ,[name,title,image,time,description])
         res.json(newBlog.rows[0])
 
     }
     catch(err){
-        res.json(err.message)
+        res.json('can not work')
 
     }
     
@@ -90,7 +90,7 @@ app.delete('/adminblog/:id',async(req,res)=>{
     }
 })
 
-app.listen(6000,()=>{
+app.listen(5000,()=>{
     console.log('server is working')
 
 })
